@@ -1,0 +1,80 @@
+<ion-content [fullscreen]="true" color="light">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-vertical">
+
+      <ion-title mode="ios">
+        <img [src]="'assets/imgs/logo.png'">
+      </ion-title>
+
+      <ion-buttons slot="start">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'tabs', 'configuration']">
+          <ion-icon name="apps-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'management-types', 'create']">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Tipos de datos
+        </ion-text>
+        <p>
+          ...
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="srch">
+    <ion-col size="12">
+      <ion-select label-placement="floating" fill="solid" placeholder="Seleccione" (ionChange)="handleChange($event)">
+        <ion-select-option value="type_document">Tipos de documento</ion-select-option>
+        <ion-select-option value="type_role">Tipos de rol</ion-select-option>
+        <ion-select-option value="type_gender">Tipos de genero</ion-select-option>
+        <ion-select-option value="type_financing">Tipos de financiamiento</ion-select-option>
+        <ion-select-option value="type_status_treatment">Tipos de estado de tratamiento</ion-select-option>
+      </ion-select>
+    </ion-col>
+  </ion-row>
+
+  <ion-list lines class="ion-margin-bottom recentJobs">
+    <ion-item *ngFor="let item of managementTypes.data; trackBy: trackById" class="ion-margin-bottom" [button]="true"
+      detail="false" (click)="setOpen(true, item.id)">
+      <ion-thumbnail slot="start">
+        {{ item.name.charAt(0) + item.type.charAt(0) }}
+      </ion-thumbnail>
+      <ion-label class="recent">
+        {{ item.name }}
+        <p>
+          {{item.type}}
+        </p>
+      </ion-label>
+      <ion-text slot="end" color="dark">
+        @if(item.status){<div class="small-chip success">Activo</div>}
+        @if(!item.status){<div class="small-chip danger">Inactivo</div>}
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    @if (!noMoreData) {<ion-infinite-scroll-content></ion-infinite-scroll-content>}
+  </ion-infinite-scroll>
+
+  <ion-action-sheet [isOpen]="actionSheet.isActionSheetOpen" header="Acciones" [buttons]="actionSheet.actionButtons"
+    (didDismiss)="setOpen(false)"></ion-action-sheet>
+
+</ion-content>

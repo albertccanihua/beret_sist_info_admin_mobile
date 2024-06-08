@@ -1,0 +1,94 @@
+<ion-content class="ion-padding">
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-button mode="ios" color="light" [routerLink]="['/', 'mobile', 'management-types', 'list']">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Actualizar
+        </ion-text>
+        <p>
+          <ion-text color="dark">
+            Tipo de dato
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <div class="divider"></div>
+
+  <br>
+  <br>
+
+  <ion-list>
+    <ion-item>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Tipo de documento: <ion-text color="danger">(*)</ion-text></ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-select label-placement="floating" fill="solid" placeholder="Seleccione"
+            [(ngModel)]="managementTypeToUpdate.type">
+            <ion-select-option value="type_document">Tipos de documento</ion-select-option>
+            <ion-select-option value="type_role">Tipos de rol</ion-select-option>
+            <ion-select-option value="type_gender">Tipos de genero</ion-select-option>
+            <ion-select-option value="type_financing">Tipos de financiamiento</ion-select-option>
+            <ion-select-option value="type_status_treatment">Tipos de estado de tratamiento</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Nombre: <ion-text color="danger">(*)</ion-text></ion-label>
+        </ion-col>
+        <ion-col>
+          <input type="text" [(ngModel)]="managementTypeToUpdate.name">
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Descripción:</ion-label>
+        </ion-col>
+        <ion-col>
+          <input type="text" [(ngModel)]="managementTypeToUpdate.description">
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Tipo de documento: <ion-text color="danger">(*)</ion-text></ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-select label-placement="floating" fill="solid" placeholder="Seleccione"
+            [(ngModel)]="managementTypeToUpdate.status">
+            <ion-select-option [value]="true">Activo</ion-select-option>
+            <ion-select-option [value]="false">Inactivo</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button mode="ios" expand="block" class="button-apply-advance-filters" (click)="createManagemenType()">
+          Grabar
+          <ion-icon slot="end" name="save-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

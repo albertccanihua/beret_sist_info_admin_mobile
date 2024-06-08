@@ -1,0 +1,237 @@
+<ion-content [fullscreen]="true" color="light">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-vertical">
+
+      <ion-title mode="ios">
+        <img [src]="'assets/imgs/logo.png'">
+      </ion-title>
+
+      <ion-buttons slot="start">
+        @if(userRole === 'Administrador'){
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'patients', 'create']">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-thumbnail>
+        }
+      </ion-buttons>
+
+      <ion-buttons slot="end" (click)="signOut()">
+        <ion-thumbnail>
+          <img src="assets/imgs/encendido.png">
+        </ion-thumbnail>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Pacientes
+        </ion-text>
+        <p>
+          Datos generales / Consultas
+        </p>
+      </ion-label>
+    </ion-col>
+    @if(userRole === 'Administrador'){
+    <ion-col size="12">
+      <ion-row style="margin-right: 2.5vw">
+        <ion-segment [value]="segmentValue" (ionChange)="changeSegment($event)" mode="ios">
+          <ion-segment-button value="general">
+            <ion-label>Datos generales</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="requests">
+            <ion-label>Consultas</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-row>
+    </ion-col>
+    }
+  </ion-row>
+
+  @if (segmentValue === 'general') {
+  <ion-row class="srch">
+    <ion-col size="10">
+      <ion-searchbar [debounce]="1000" (ionInput)="handleSearchbar($event)" class="srchBar"
+        placeholder="Buscar por documento"></ion-searchbar>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button mode="ios" (click)="setOpenModalAdvanceFilters(true)">
+        <ion-icon name="options"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-list lines class="ion-margin-bottom recentJobs">
+    <ion-item *ngFor="let item of patientsGeneralSegment.data; trackBy: trackById" class="ion-margin-bottom"
+      [button]="true" detail="false" (click)="setOpen(true, item.id)">
+      <ion-thumbnail slot="start">
+        {{ item.name.charAt(0) + item.paternal_surname.charAt(0) }}
+      </ion-thumbnail>
+      <ion-label class="recent">
+        {{ item.name + ' ' + item.paternal_surname }}
+        <p>
+          {{item.document_number}}
+          <span class="dot"></span>
+          {{item.type_financing.name}}
+        </p>
+      </ion-label>
+      <ion-text slot="end" color="dark">
+        @if(item.status){<div class="small-chip success">Activo</div>}
+        @if(!item.status){<div class="small-chip danger">Inactivo</div>}
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    @if (!noMoreData) {<ion-infinite-scroll-content></ion-infinite-scroll-content>}
+  </ion-infinite-scroll>
+
+  <ion-action-sheet [isOpen]="actionSheet.isActionSheetOpen" header="Acciones" [buttons]="actionSheet.actionButtons"
+    (didDismiss)="setOpen(false)"></ion-action-sheet>
+
+  <ion-modal [isOpen]="isModalAdvanceFiltersOpen">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <ion-row class="tagline">
+          <ion-col size="12">
+            <ion-button mode="ios" color="light" id="advance-filters" (click)="setOpenModalAdvanceFilters(false)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>
+              <ion-text>
+                Filtros
+              </ion-text>
+              <p>
+                Otros datos / Paginación
+              </p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+        <div class="divider"></div>
+        <br><br>
+
+        <ion-list>
+          <ion-item>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Nombres:</ion-label>
+              </ion-col>
+              <ion-col>
+                <input type="text" [(ngModel)]="patientFiltersGeneralSegment.name">
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Apellido paterno:</ion-label>
+              </ion-col>
+              <ion-col>
+                <input type="text" [(ngModel)]="patientFiltersGeneralSegment.paternal_surname">
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Tipo de documento:</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-select label-placement="floating" fill="solid" placeholder="Seleccione"
+                  [(ngModel)]="patientFiltersGeneralSegment.type_document">
+                  <ion-select-option *ngFor="let item of typeDocuments"
+                    [value]="item.id">{{item.name}}</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Tipo de financiamiento:</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-select label-placement="floating" fill="solid" placeholder="Seleccione"
+                  [(ngModel)]="patientFiltersGeneralSegment.type_financing">
+                  <ion-select-option *ngFor="let item of typeFinancing"
+                    [value]="item.id">{{item.name}}</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-button mode="ios" expand="block" class="button-apply-advance-filters" (click)="cleanFilters()">
+              Limpiar
+              <ion-icon slot="end" name="sync-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button mode="ios" expand="block" class="button-apply-advance-filters" (click)="initialSearch()">
+              Aplicar filtros
+              <ion-icon slot="end" name="filter"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  }
+
+  @if (segmentValue === 'requests') {
+  <ion-row class="srch">
+    <ion-col size="10">
+      <ion-searchbar (ionInput)="handleSearchbarRequest($event)" class="srchBar"
+        placeholder="Buscar por documento"></ion-searchbar>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button mode="ios" (click)="initialSearchRequests()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-list lines class="ion-margin-bottom recentJobs">
+    <ion-item *ngFor="let item of treatmentsRequestsSegment; trackBy: trackById" class="ion-margin-bottom"
+      [button]="true" detail="false" (click)="setOpenRequests(true, item.id)">
+      <ion-thumbnail slot="start">
+        {{ item.code.charAt(0) + item.code.charAt(1) }}
+      </ion-thumbnail>
+      <ion-label class="recent">
+        {{ item.code }}
+        <p>
+          {{item?.name}}
+          <span class="dot"></span>
+          {{item.acceptance_rate}} %
+        </p>
+      </ion-label>
+      <ion-text slot="end" color="dark">
+        @if(item.status){<div class="small-chip success">Activo</div>}
+        @if(!item.status){<div class="small-chip danger">Inactivo</div>}
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    @if (!noMoreData) {<ion-infinite-scroll-content></ion-infinite-scroll-content>}
+  </ion-infinite-scroll>
+
+  <ion-action-sheet [isOpen]="actionSheet.isActionSheetOpen" header="Acciones" [buttons]="actionSheet.actionButtons"
+    (didDismiss)="setOpen(false)"></ion-action-sheet>
+
+  }
+
+</ion-content>

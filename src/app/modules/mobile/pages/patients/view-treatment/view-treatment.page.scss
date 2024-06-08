@@ -1,0 +1,134 @@
+ion-row.tagline {
+    padding-left: 1.5vh;
+
+    ion-text {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ion-color-primary);
+    }
+
+    p {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--ion-color-medium-shade);
+    }
+}
+
+.user-status {
+    width: 85vw;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 9px;
+    border-radius: 7px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.user-status.success {
+    background: rgba(45, 211, 111, 0.08) !important;
+    color: var(--ion-color-success-shade) !important;
+
+}
+
+.user-status.danger {
+    background: rgba(235, 68, 90, 0.08);
+    color: var(--ion-color-danger-shade) !important;
+}
+
+.user-data {
+    background: rgba(57, 23, 23, 0.08);
+    width: 85vw;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 9px;
+    border-radius: 7px;
+
+    ion-label {
+        font-size: 12pt;
+        font-weight: 800;
+        color: var(--ion-color-dark-tint);
+    }
+
+    h6 {
+        font-size: 11pt;
+        padding: 0px;
+        margin: 0px;
+        color: var(--ion-color-dark-tint);
+        margin-bottom: 5px;
+    }
+}
+
+.treatment-grid {
+    margin-left: 2.5vh;
+    margin-right: 2.5vh;
+    border: 1px rgb(202, 202, 202) solid;
+    border-radius: 4px;
+
+    ion-row {
+        ion-col {
+            .speciality-header {
+                border: 1px rgb(202, 202, 202) solid;
+                border-radius: 4px;
+                margin: 1px;
+                font-size: 11pt;
+                font-weight: 800;
+                padding: 5px;
+                color: var(--ion-color-dark-tint);
+            }
+
+            .speciality-assistances {
+                ion-row {
+                    ion-col {
+                        flex: 0 0 calc(calc(4 / var(--ion-grid-columns, 12))* 95%) !important;
+                        width: calc(calc(4 / var(--ion-grid-columns, 12))* 100%);
+                        max-width: calc(calc(4 / var(--ion-grid-columns, 12))* 100%);
+                        border: 1px rgb(202, 202, 202) solid;
+                        border-radius: 4px;
+                        margin: 2px;
+
+                        ion-button {
+                            --background: transparent;
+                            --color: var(--ion-color-primary);
+                            font-weight: 700;
+                            --box-shadow: none !important;
+                            --padding-top: 20px;
+                            --padding-bottom: 20px;
+                            margin-top: 0px !important;
+                            margin-bottom: 0px !important;
+                            font-size: 9pt;
+                        }
+
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+.popover {
+    text-align: center;
+
+
+    .item {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        color: var(--ion-color-primary);
+
+        ion-label {
+            font-weight: 700 !important;
+        }
+
+        p {
+            display: block;
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            unicode-bidi: isolate;
+        }
+
+    }
+}

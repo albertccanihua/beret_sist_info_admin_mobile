@@ -1,0 +1,62 @@
+<ion-content [fullscreen]="true" color="light">
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-vertical">
+
+      <ion-title mode="ios">
+        <img [src]="'assets/imgs/logo.png'">
+      </ion-title>
+
+      <ion-buttons slot="start">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'tabs', 'configuration']">
+          <ion-icon name="apps-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'upload-data']">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Carga de Datos
+        </ion-text>
+        <p>
+          Importación de base de datos desde archivo excel
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <br>
+
+  <ion-list lines class="ion-margin-bottom recentJobs">
+    <ion-item *ngFor="let item of massiveUploads" class="ion-margin-bottom" [button]="true" detail="false"
+      (click)="setOpen(true, item.id)">
+      <ion-thumbnail slot="start">
+        {{ item.filename.charAt(0) + item.filename.charAt(1) }}
+      </ion-thumbnail>
+      <ion-label class="recent">
+        {{ item.filename }}
+        <p>
+          {{item.created_at}}
+        </p>
+      </ion-label>
+      <ion-text slot="end" color="dark">
+        @if(item.status){<div class="small-chip success">Activo</div>}
+        @if(!item.status){<div class="small-chip danger">Inactivo</div>}
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-action-sheet [isOpen]="actionSheet.isActionSheetOpen" header="Acciones" [buttons]="actionSheet.actionButtons"
+    (didDismiss)="setOpen(false)"></ion-action-sheet>
+
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true" color="light">
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-vertical">
+
+      <ion-title mode="ios">
+        <img [src]="'assets/imgs/logo.png'">
+      </ion-title>
+
+      <ion-buttons slot="start">
+        <ion-thumbnail>
+          ...
+        </ion-thumbnail>
+      </ion-buttons>
+
+      <ion-buttons slot="end" (click)="signOut()">
+        <ion-thumbnail>
+          <img src="assets/imgs/encendido.png">
+        </ion-thumbnail>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Reportes
+        </ion-text>
+        <p>
+          ...
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6" *ngFor="let item of optionButtons">
+      <div class="options">
+        <ion-card [routerLink]="item.path">
+          <ion-list lines="none">
+            <ion-item color="primary">
+              <ion-label>
+                {{item.label}}
+                <p>
+                  <ion-text color="medium">
+                    {{item.text}}
+                  </ion-text>
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

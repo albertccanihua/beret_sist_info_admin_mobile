@@ -1,0 +1,7 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [tab]="p.url" *ngFor="let p of mobilePages; let i = index">
+      <ion-icon [name]="p.icon"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

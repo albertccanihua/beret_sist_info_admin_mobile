@@ -1,0 +1,65 @@
+<ion-content class="ion-padding">
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-button mode="ios" color="light" [routerLink]="['/', 'mobile', 'upload-data-list']">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          {{massiveUploadCreatedAt}}
+        </ion-text>
+        <p>
+          {{massiveUpload?.filename}}
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <br>
+
+  <ion-list>
+    <ion-item *ngFor="let item of massiveUpload?.massive_upload_items; let i = index" (click)="setOpen(item)">
+      <ion-badge slot="end" *ngIf="item.status === true">Ok</ion-badge>
+      <ion-badge slot="end" *ngIf="item.status === false">Error</ion-badge>
+      <ion-label>Registro de tratamiento {{i + 1}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <ion-button mode="ios" color="light" (click)="setClose()" style="margin-left:2vh;margin-top:1.5vh;">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+
+        <br>
+        <br>
+
+        <h3 style="margin-left:2vh;margin-top:1.5vh;">Estado</h3>
+
+        <div *ngIf="massiveUploadItem?.status === true" class="user-status success">OK</div>
+        <div *ngIf="massiveUploadItem?.status === false" class="user-status danger">ERROR</div>
+
+        <ul>
+          <li *ngFor="let reason of status">
+            {{reason}}
+          </li>
+        </ul>
+
+        <br>
+
+        <h3 style="margin-left:2vh;margin-top:1.5vh;">Datos enviados</h3>
+
+        <ul>
+          <li *ngFor="let key of objectKeys; let i = index" class="li">
+            <strong>{{ key }}:</strong> {{ objectValues[i] }}
+          </li>
+        </ul>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

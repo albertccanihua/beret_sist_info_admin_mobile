@@ -1,0 +1,70 @@
+<ion-content class="ion-padding">
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-button mode="ios" color="light" [routerLink]="['/', 'mobile', 'upload-data-list']">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Carga Masiva 
+        </ion-text>
+        <p>
+          <ion-text color="dark">
+            de Datos
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <div class="divider"></div>
+
+  <br>
+  <br>
+
+  <ion-alert [isOpen]="isProcessing" subHeader="Espere por favor" [backdropDismiss]="false"
+    message="Los datos se están cargando en la base de datos"></ion-alert>
+
+  <ion-row class="button-content">
+    <ion-col>
+      <ion-button (click)="selectFile()" class="btn-action" [disabled]="existsFile">
+        <ion-icon name="add-outline"></ion-icon>
+        <ion-label>Seleccionar</ion-label>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button (click)="uploadFile()" class="btn-action" [disabled]="!existsFile">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+        <ion-label>Subir</ion-label>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="danger" (click)="cancelOperation()" class="btn-action" [disabled]="!existsFile">
+        <ion-icon name="close-outline"></ion-icon>
+        <ion-label>Cancelar</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <br>
+
+  <ion-row>
+    <ion-col>
+      <ion-card *ngIf="existsFile">
+        <ion-card-header>
+          <ion-card-title>Archivo seleccionado</ion-card-title>
+          <ion-card-subtitle>{{fileToUpload.name}}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          - {{dataToUpload.length}} filas encontradas
+          <br>
+          - {{fileToUpload.mimeType}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

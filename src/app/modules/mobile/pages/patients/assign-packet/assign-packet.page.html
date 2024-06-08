@@ -1,0 +1,49 @@
+<ion-content class="ion-padding">
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-button mode="ios" color="light" [routerLink]="['/', 'mobile', 'tabs', 'patients']">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Asignar
+        </ion-text>
+        <p>
+          <ion-text color="dark">
+            Paquete
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <div class="divider"></div>
+
+  <br>
+  <br>
+
+  <div class="patient-data">
+    <ion-label>Paciente</ion-label>
+    <h6>{{patient?.name}} {{patient?.paternal_surname}}</h6>
+  </div>
+
+  <br>
+  <br>
+
+  <div style="margin-bottom: 90px;">
+    <ion-radio-group>
+      <ion-item *ngFor="let packet of packets">
+        <ion-radio [value]="packet.id" justify="space-between">{{packet.name}}</ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+
+  <ion-footer>
+    <ion-button mode="ios" expand="block" class="button-apply-advance-filters">
+      Guardar
+      <ion-icon slot="end" name="save-outline"></ion-icon>
+    </ion-button>
+  </ion-footer>
+</ion-content>

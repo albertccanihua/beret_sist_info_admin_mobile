@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true" color="light">
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-vertical">
+
+      <ion-title mode="ios">
+        <img [src]="'assets/imgs/logo.png'">
+      </ion-title>
+
+      <ion-buttons slot="start">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'tabs', 'reports']">
+          <ion-icon name="apps-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Control
+        </ion-text>
+        <p>
+          General
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <br>
+
+  <ion-row class="srch">
+    <ion-col size="12">
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime" #datetime (ionChange)="pickTime(datetime.value)" showDefaultButtons="true"
+            presentation="date" doneText="Confirmar" cancelText="Cancelar"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-col>
+    <ion-col size="12" class="button-search-container">
+      <ion-button (click)="getTreatmentRequestFollowUp()">
+        Buscar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <br>
+  <br>
+
+  <div class="requests_counter_container">
+    <div class="title">N° DE TRATAMIENTOS POR DÍA</div>
+    <div class="counter">{{treatmentAssistanceFollowUp.treatments_per_day}}</div>
+  </div>
+  <div class="requests_counter_container">
+    <div class="title">N° DE TRATAMIENTOS POR MES</div>
+    <div class="counter">{{treatmentAssistanceFollowUp.treatments_per_month}}</div>
+  </div>
+  <div class="requests_counter_container">
+    <div class="title">N° DE PACIENTES ATENDIDOS POR MES</div>
+    <div class="counter">{{treatmentRequestFollowUp.requests_per_month}}</div>
+  </div>
+
+</ion-content>

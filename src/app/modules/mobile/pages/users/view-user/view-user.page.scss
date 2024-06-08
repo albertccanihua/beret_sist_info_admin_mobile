@@ -1,0 +1,74 @@
+ion-row.tagline {
+    padding-left: 1.5vh;
+
+    ion-text {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ion-color-primary);
+    }
+
+    p {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--ion-color-medium-shade);
+    }
+}
+
+.user-status {
+    width: 85vw;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 9px;
+    border-radius: 7px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.user-status.success {
+    background: rgba(45, 211, 111, 0.08) !important;
+    color: var(--ion-color-success-shade) !important;
+
+}
+
+.user-status.danger {
+    background: rgba(235, 68, 90, 0.08);
+    color: var(--ion-color-danger-shade) !important;
+}
+
+.user-data {
+    background: rgba(57, 23, 23, 0.08);
+    width: 85vw;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 9px;
+    border-radius: 7px;
+
+    ion-label {
+        font-size: 12pt;
+        font-weight: 800;
+        color: var(--ion-color-dark-tint);
+    }
+
+    h6 {
+        font-size: 11pt;
+        padding: 0px;
+        margin: 0px;
+        color: var(--ion-color-dark-tint);
+        margin-bottom: 5px;
+    }
+}
+
+ion-footer {
+    box-shadow: none !important;
+
+    ion-toolbar {
+        ion-button {
+            margin-left: 3vh;
+            margin-right: 3vh;
+            padding-top: .5vh;
+            padding-bottom: .5vh;
+        }
+    }
+}

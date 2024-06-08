@@ -1,0 +1,150 @@
+<ion-content [fullscreen]="true" color="light">
+  <ion-loading [isOpen]="loading" message="Espere por favor..."></ion-loading>
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="light" class="ion-padding-vertical">
+
+      <ion-title mode="ios">
+        <img [src]="'assets/imgs/logo.png'">
+      </ion-title>
+
+      <ion-buttons slot="start">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'tabs', 'configuration']">
+          <ion-icon name="apps-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-thumbnail [routerLink]="['/', 'mobile', 'specialities', 'create']">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-thumbnail>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="tagline">
+    <ion-col size="12">
+      <ion-label>
+        <ion-text>
+          Especialidades
+        </ion-text>
+        <p>
+          ...
+        </p>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="srch">
+    <ion-col size="10">
+      <ion-searchbar [debounce]="1000" (ionInput)="handleSearchbar($event)" class="srchBar"
+        placeholder="Buscar por código"></ion-searchbar>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button mode="ios" (click)="setOpenModalAdvanceFilters(true)">
+        <ion-icon name="options"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-list lines class="ion-margin-bottom recentJobs">
+    <ion-item *ngFor="let item of specialities.data; trackBy: trackById" class="ion-margin-bottom" [button]="true"
+      detail="false" (click)="setOpen(true, item.id)">
+      <ion-thumbnail slot="start">
+        {{ item.name.charAt(0) + item.code.charAt(0) }}
+      </ion-thumbnail>
+      <ion-label class="recent">
+        {{ item.name }}
+        <p>
+          {{item.code}}
+        </p>
+      </ion-label>
+      <ion-text slot="end" color="dark">
+        @if(item.status){<div class="small-chip success">Activo</div>}
+        @if(!item.status){<div class="small-chip danger">Inactivo</div>}
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    @if (!noMoreData) {<ion-infinite-scroll-content></ion-infinite-scroll-content>}
+  </ion-infinite-scroll>
+
+  <ion-action-sheet [isOpen]="actionSheet.isActionSheetOpen" header="Acciones" [buttons]="actionSheet.actionButtons"
+    (didDismiss)="setOpen(false)"></ion-action-sheet>
+
+  <ion-modal [isOpen]="isModalAdvanceFiltersOpen">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <ion-row class="tagline">
+          <ion-col size="12">
+            <ion-button mode="ios" color="light" id="advance-filters" (click)="setOpenModalAdvanceFilters(false)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>
+              <ion-text>
+                Filtros
+              </ion-text>
+              <p>
+                Otros datos / Paginación
+              </p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+        <div class="divider"></div>
+        <br><br>
+
+        <ion-list>
+          <ion-item>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Nombre:</ion-label>
+              </ion-col>
+              <ion-col>
+                <input type="text" [(ngModel)]="specialityFilters.name">
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Estado:</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-select label-placement="floating" fill="solid" placeholder="Seleccione"
+                  [(ngModel)]="specialityFilters.status">
+                  <ion-select-option [value]="1">Activo</ion-select-option>
+                  <ion-select-option [value]="0">Inactivo</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-button mode="ios" expand="block" class="button-apply-advance-filters" (click)="cleanFilters()">
+              Limpiar
+              <ion-icon slot="end" name="sync-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button mode="ios" expand="block" class="button-apply-advance-filters" (click)="initialSearch()">
+              Aplicar filtros
+              <ion-icon slot="end" name="filter"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>
